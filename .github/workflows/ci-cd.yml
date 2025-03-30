@@ -23,18 +23,15 @@ jobs:
 
       - name: Install dependencies (Backend)
         run: |
-          cd backend
           npm install
 
       # Removed the test step as it's not required
       # - name: Run Backend Tests
       #   run: |
-      #     cd backend
       #     npm test
 
       - name: Build Docker Image (Backend)
         run: |
-          cd backend
           docker build -t my-backend .
 
       - name: Docker Login to Docker Hub

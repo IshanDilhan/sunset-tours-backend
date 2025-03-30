@@ -23,6 +23,7 @@ jobs:
 
       - name: Install dependencies (Backend)
         run: |
+          cd backend
           npm install
 
       # Removed the test step as it's not required
@@ -33,10 +34,14 @@ jobs:
 
       - name: Build Docker Image (Backend)
         run: |
+          cd backend
           docker build -t my-backend .
+
+      - name: Docker Login to Docker Hub
+        run: |
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
       - name: Push Docker Image to Docker Hub
         run: |
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker tag my-backend:latest ishandilhan/my-backend:latest
           docker push ishandilhan/my-backend:latest
